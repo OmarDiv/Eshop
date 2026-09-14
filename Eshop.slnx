@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Bootstrapper/">
+    <Project Path="Eshop.API/Eshop.API.csproj" />
+  </Folder>
+  <Folder Name="/Modules/" />
+  <Folder Name="/Modules/Basket/">
+    <Project Path="Basket/Basket.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Catalog/">
+    <Project Path="Catalog/Catalog.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Ordering/">
+    <Project Path="Ordering/Ordering.csproj" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="Shared/Shared.csproj" />
+  </Folder>
+</Solution>
