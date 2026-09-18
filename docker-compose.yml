@@ -1,0 +1,6 @@
+services:
+  eshopdb:
+      image: postgres:latest
+
+volumes:
+    postgresql_eshopdb:

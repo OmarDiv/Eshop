@@ -1,0 +1,15 @@
+name: eshop-stack
+
+services:
+  eshopdb:
+    container_name: eshopdb
+    environment:
+         POSTGRES_DB: EshopDb
+         POSTGRES_USER: postgres
+         POSTGRES_PASSWORD: postgres
+    restart: always
+    ports: 
+          -  "5432:5432"  
+    volumes:
+            - postgresql_eshopdb:/var/lib/postgresql
+        

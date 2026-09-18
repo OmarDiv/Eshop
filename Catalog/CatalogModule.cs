@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Data;
 
 namespace Catalog
 {
@@ -10,10 +11,15 @@ namespace Catalog
         {
             // Register services related to the Catalog module
             // Configure options if needed
+            services.AddDbContext<CatalogDbContext>((s,options) =>
+            {
+                options.UseNpgsql(configuration.GetConnectionString("Database"));
+            });
             return services;
         }
         public static IApplicationBuilder UseCatalogModule(this IApplicationBuilder app)
         {
+           app.UseMigration<CatalogDbContext>();
             // Configure middleware related to the Catalog module if needed
             return app;
         }
