@@ -6,7 +6,7 @@ namespace Shared.DDD
         private readonly List<IDomainEvent> _domainEvents = [];
         public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-       public IDomainEvent[] ClearDomainEvents()
+        public IDomainEvent[] ClearDomainEvents()
         {
             var events = _domainEvents.ToArray();
             _domainEvents.Clear();

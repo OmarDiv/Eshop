@@ -1,6 +1,4 @@
-﻿using Catalog.Products.Models;
-
-namespace Catalog.Data
+﻿namespace Catalog.Data
 {
     public class CatalogDbContext : DbContext
     {

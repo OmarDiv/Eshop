@@ -1,5 +1,4 @@
-﻿using Catalog.Products.Models;
-namespace Catalog.Data.Configurations
+﻿namespace Catalog.Data.Configurations
 {
     public class ProductConfigurations : IEntityTypeConfiguration<Product>
     {

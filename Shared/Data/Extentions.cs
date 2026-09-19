@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Shared.Data.Seed;
 
 namespace Shared.Data
 {
@@ -12,6 +10,7 @@ namespace Shared.Data
         public static IApplicationBuilder UseMigration<TContext>(this IApplicationBuilder app) where TContext : DbContext
         {
             MigrateDatabaseAsync<TContext>(app.ApplicationServices).GetAwaiter().GetResult();
+            SeedDataAsync(app.ApplicationServices).GetAwaiter().GetResult();
             return app;
         }
         private static async Task MigrateDatabaseAsync<TContext>(IServiceProvider serviceProvider)
@@ -21,6 +20,15 @@ namespace Shared.Data
             var context = Scope.ServiceProvider.GetRequiredService<TContext>();
 
             await context.Database.MigrateAsync();
+        }
+        private static async Task SeedDataAsync(IServiceProvider serviceProvider)
+        {
+            using var Scope = serviceProvider.CreateScope();
+            var Seeders = Scope.ServiceProvider.GetServices<IDataSeeder>();
+            foreach (var seeder in Seeders)
+            {
+                await seeder.SeedAllAsync();
+            }
         }
     }
 }
