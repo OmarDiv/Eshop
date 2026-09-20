@@ -2,11 +2,11 @@
 
 namespace Catalog.Products.Feature.GetProductByCategory;
 
-public record GetProductByCategoryCommand(string Category) : IQuery<GetProductByCategoryResult>;
+public record GetProductByCategoryQuery(string Category) : IQuery<GetProductByCategoryResult>;
 public record GetProductByCategoryResult(IEnumerable<ProductDto> Products);
-public class GetProductByCategoryHandler(CatalogDbContext _context) : IQueryHandler<GetProductByCategoryCommand, GetProductByCategoryResult>
+public class GetProductsByCategoryHandler(CatalogDbContext _context) : IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
 {
-    public async Task<GetProductByCategoryResult> Handle(GetProductByCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<GetProductByCategoryResult> Handle(GetProductByCategoryQuery request, CancellationToken cancellationToken)
     {
         return new GetProductByCategoryResult(await _context
             .Products

@@ -1,5 +1,4 @@
-﻿using Catalog.Products.Dtos;
-namespace Catalog.Products.Feature.CreateProduct;
+﻿namespace Catalog.Products.Feature.GetProducts;
 
 public record GetProductsQuery() : IQuery<GetProductsResult>;
 public record GetProductsResult(IEnumerable<ProductDto> ProductDtos);

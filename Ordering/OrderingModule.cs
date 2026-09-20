@@ -12,7 +12,7 @@ namespace Ordering
             // Configure options if needed
             return services;
         }
-        public static IApplicationBuilder UseOrderingModule(this IApplicationBuilder app)
+        public async static Task<IApplicationBuilder> UseOrderingModuleAsync(this IApplicationBuilder app)
         {
             // Configure middleware related to the Ordering module if needed
             return app;

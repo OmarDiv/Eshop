@@ -1,6 +1,6 @@
 ﻿namespace Catalog.Data.Seed
 {
-    public class CataglogDataSeeder(CatalogDbContext context) : IDataSeeder
+    public class CatalogDataSeeder(CatalogDbContext context) : IDataSeeder
     {
         public async Task SeedAllAsync()
         {

@@ -11,4 +11,9 @@ global using Shared.DDD;
 global using System.Reflection;
 global using Catalog.Products.Events;
 global using MediatR;
+global using Carter;
+global using Catalog.Products.Dtos;
+global using Microsoft.AspNetCore.Routing;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Builder;   
 

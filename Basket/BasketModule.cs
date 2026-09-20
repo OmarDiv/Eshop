@@ -12,7 +12,7 @@ namespace Basket
             // Configure options if needed
             return services;
         }
-        public static IApplicationBuilder UseBasketModule(this IApplicationBuilder app)
+        public async static Task<IApplicationBuilder>  UseBasketModuleAsync(this IApplicationBuilder app)
         {
             // Configure middleware related to the Basket module if needed
             return app;
