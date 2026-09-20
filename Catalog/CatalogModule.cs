@@ -24,9 +24,9 @@ namespace Catalog
             services.AddScoped<IDataSeeder, CataglogDataSeeder>();
             return services;
         }
-        public static IApplicationBuilder UseCatalogModule(this IApplicationBuilder app)
+        public static async Task<IApplicationBuilder> UseCatalogModule(this IApplicationBuilder app)
         {
-            app.UseMigration<CatalogDbContext>();
+           app = await app.UseMigrationAsync<CatalogDbContext>();
             // Configure middleware related to the Catalog module if needed
             return app;
         }
