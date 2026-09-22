@@ -2,6 +2,7 @@
 
 public record GetProductsQuery() : IQuery<GetProductsResult>;
 public record GetProductsResult(IEnumerable<ProductDto> ProductDtos);
+
 public class GetProductsHandler(CatalogDbContext _context) : IQueryHandler<GetProductsQuery, GetProductsResult>
 {
     public async Task<GetProductsResult> Handle(GetProductsQuery request, CancellationToken cancellationToken)

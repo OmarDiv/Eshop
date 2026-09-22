@@ -4,6 +4,13 @@ namespace Catalog.Products.Feature.GetProductByCategory;
 
 public record GetProductByCategoryQuery(string Category) : IQuery<GetProductByCategoryResult>;
 public record GetProductByCategoryResult(IEnumerable<ProductDto> Products);
+public class GetProductByCategoryQueryValidator : AbstractValidator<GetProductByCategoryQuery>
+{
+    public GetProductByCategoryQueryValidator()
+    {
+        RuleFor(x => x.Category).NotEmpty().WithMessage("Category is required");
+    }
+}
 public class GetProductsByCategoryHandler(CatalogDbContext _context) : IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
 {
     public async Task<GetProductByCategoryResult> Handle(GetProductByCategoryQuery request, CancellationToken cancellationToken)
