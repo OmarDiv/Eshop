@@ -8,15 +8,18 @@ public class GetProductByIdHandler(CatalogDbContext _context) : IQueryHandler<Ge
     {
         var product = await _context.Products
             .AsNoTracking()
+            .Where(p => p.Id == request.ProductId)
             .ProjectToType<ProductDto>()
-            .SingleOrDefaultAsync(p => p.Id == request.ProductId, cancellationToken);
+            .SingleOrDefaultAsync(cancellationToken);
+
+        
 
         if (product == null)
         {
             throw new Exception($"Product with id {request.ProductId} Not Found");
         }
 
-        return new GetProductByIdResult(product!);
+        return new GetProductByIdResult(product);
 
     }
 

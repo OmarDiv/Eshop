@@ -1,3 +1,4 @@
+using Carter;
 using Shared.Extentions;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,5 +17,6 @@ await app.UseCatalogModuleAsync();
 await app.UseBasketModuleAsync();
 await app.UseOrderingModuleAsync();
 
+app.MapCarter();
 
 app.Run();
