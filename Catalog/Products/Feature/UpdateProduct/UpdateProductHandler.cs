@@ -2,6 +2,19 @@
 
 public record UpdateProductCommand(ProductDto Product) : ICommand<UpdateProductResult>;
 public record UpdateProductResult(bool IsSuccess);
+
+public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
+{
+    public UpdateProductCommandValidator()
+    {
+        RuleFor(x => x.Product.Id).NotEmpty().WithMessage("Product id is required");
+        RuleFor(x => x.Product.Name).NotEmpty().WithMessage("Product name is required");
+        RuleFor(x => x.Product.Price).GreaterThan(0).WithMessage("Product price must be a positive value");
+
+
+    }
+
+}
 public class UpdateProductHandler(CatalogDbContext _context) : ICommandHandler<UpdateProductCommand, UpdateProductResult>
 {
     public async Task<UpdateProductResult> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
