@@ -24,7 +24,7 @@ public class GetProductByIdHandler(CatalogDbContext _context) : IQueryHandler<Ge
 
         if (product == null)
         {
-            throw new Exception($"Product with id {request.ProductId} Not Found");
+            throw new ProductNotFoundException(request.ProductId);
         }
 
         return new GetProductByIdResult(product);

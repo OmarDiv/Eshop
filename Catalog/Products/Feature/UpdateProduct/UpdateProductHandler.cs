@@ -8,10 +8,10 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
     public UpdateProductCommandValidator()
     {
         RuleFor(x => x.Product.Id).NotEmpty().WithMessage("Product id is required");
-        RuleFor(x => x.Product.Name).NotEmpty().WithMessage("Product name is required");
+        RuleFor(x => x.Product.Name)
+                    .NotEmpty().WithMessage("Product name is required")
+                    .MinimumLength(5).WithMessage("Product name must be at least 5 characters long");
         RuleFor(x => x.Product.Price).GreaterThan(0).WithMessage("Product price must be a positive value");
-
-
     }
 
 }
@@ -23,7 +23,7 @@ public class UpdateProductHandler(CatalogDbContext _context) : ICommandHandler<U
         var product = await _context.Products.FindAsync([request.Product.Id], cancellationToken);
 
         if (product is null)
-            throw new Exception($"Product with id {request.Product.Id} Not Found");
+            throw new ProductNotFoundException(request.Product.Id);
 
         UpdateProductWithNewVales(product, request.Product);
         await _context.SaveChangesAsync(cancellationToken);

@@ -10,6 +10,7 @@ namespace Catalog
         public static IServiceCollection AddCatalogModule(this IServiceCollection services, IConfiguration configuration)
         {
             // Register services related to the Catalog module
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(cfg => {
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
