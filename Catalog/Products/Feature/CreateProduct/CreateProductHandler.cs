@@ -1,6 +1,4 @@
-﻿using Catalog.Products.Dtos;
-
-namespace Catalog.Products.Feature.CreateProduct;
+﻿namespace Catalog.Products.Feature.CreateProduct;
 
 public record CreateProductCommand(ProductDto Product) : ICommand<CreateProductResult>;
 public record CreateProductResult(Guid ProductId);

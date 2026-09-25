@@ -1,7 +1,4 @@
 ﻿using Shared.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Catalog.Products.Exceptions
 {

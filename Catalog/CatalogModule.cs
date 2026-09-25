@@ -11,7 +11,8 @@ namespace Catalog
         {
             // Register services related to the Catalog module
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(cfg => {
+            services.AddMediatR(cfg =>
+            {
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
                 cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
@@ -30,7 +31,7 @@ namespace Catalog
         }
         public static async Task<IApplicationBuilder> UseCatalogModuleAsync(this IApplicationBuilder app)
         {
-           app = await app.UseMigrationAsync<CatalogDbContext>();
+            app = await app.UseMigrationAsync<CatalogDbContext>();
             // Configure middleware related to the Catalog module if needed
             return app;
         }

@@ -20,7 +20,7 @@ public class GetProductByIdHandler(CatalogDbContext _context) : IQueryHandler<Ge
             .ProjectToType<ProductDto>()
             .SingleOrDefaultAsync(cancellationToken);
 
-        
+
 
         if (product == null)
         {

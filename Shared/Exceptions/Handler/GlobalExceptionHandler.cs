@@ -1,10 +1,8 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using FluentValidation; // للـ ValidationException
-using Shared.Exceptions; // للـ BadRequestException بتاعك
+using System.Diagnostics;
 
 namespace Shared.Exceptions.Handler
 {
@@ -47,7 +45,7 @@ namespace Shared.Exceptions.Handler
                 var problemDetails = new ProblemDetails
                 {
                     Title = badRequestException.Message,
-                    Detail = badRequestException.Details, 
+                    Detail = badRequestException.Details,
                     Status = StatusCodes.Status400BadRequest,
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                     Instance = httpContext.Request.Path

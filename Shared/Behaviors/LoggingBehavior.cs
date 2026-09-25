@@ -16,7 +16,7 @@ namespace Shared.Behaviors
             var response = await next();
             timer.Stop();
             var timeTaken = timer.Elapsed; ;
-            if(timeTaken.Seconds > 3)
+            if (timeTaken.Seconds > 3)
                 logger.LogWarning("Handling {RequestName} - {ResponseName} took {TimeTaken} ms", typeof(TRequest).Name, typeof(TResponse).Name, timeTaken);
 
             logger.LogWarning("Handling {RequestName} - {ResponseName} took {TimeTaken} ms", typeof(TRequest).Name, typeof(TResponse).Name, timeTaken);
