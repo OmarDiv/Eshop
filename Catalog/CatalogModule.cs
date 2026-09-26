@@ -31,7 +31,7 @@ namespace Catalog
         }
         public static async Task<IApplicationBuilder> UseCatalogModuleAsync(this IApplicationBuilder app)
         {
-            app = await app.UseMigrationAsync<CatalogDbContext>();
+            await app.UseMigrationAsync<CatalogDbContext>();
             // Configure middleware related to the Catalog module if needed
             return app;
         }

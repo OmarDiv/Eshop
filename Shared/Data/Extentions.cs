@@ -9,14 +9,11 @@ namespace Shared.Data
         public static async Task<IApplicationBuilder> UseMigrationAsync<TContext>(this IApplicationBuilder app)
             where TContext : DbContext
         {
-            // 1. إنشاء Scope واحد غير تزامني (AsyncScope) لكلا العمليتين
             await using var scope = app.ApplicationServices.CreateAsyncScope();
 
-            // 2. تطبيق الـ Migration
             var context = scope.ServiceProvider.GetRequiredService<TContext>();
             await context.Database.MigrateAsync();
 
-            // 3. تطبيق الـ Seeding
             var seeders = scope.ServiceProvider.GetServices<IDataSeeder>();
             foreach (var seeder in seeders)
             {
