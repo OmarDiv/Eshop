@@ -1,6 +1,4 @@
-﻿
-
-namespace Basket.Basket.Feature.CreateBasket
+﻿namespace Basket.Basket.Feature.CreateBasket
 {
     public record CreateBasketCommand(ShoppingCartDto ShoppingCartDto) : ICommand<CreateBasketResult>;
     public record CreateBasketResult(Guid Id);
@@ -8,7 +6,7 @@ namespace Basket.Basket.Feature.CreateBasket
     {
         public CreateBasketCommandValidator()
         {
-            RuleFor(x => x.ShoppingCartDto.UserName).NotEmpty();
+            RuleFor(x => x.ShoppingCartDto.UserName).NotEmpty().WithMessage("User name is required.");
             RuleForEach(x => x.ShoppingCartDto.Items).SetValidator(new ShoppingCartItemDtoValidator());
         }
     }
@@ -16,10 +14,10 @@ namespace Basket.Basket.Feature.CreateBasket
     {
         public ShoppingCartItemDtoValidator()
         {
-            RuleFor(x => x.ProductId).NotEmpty();
-            RuleFor(x => x.Quantity).GreaterThan(0);
-            RuleFor(x => x.Price).GreaterThan(0);
-            RuleFor(x => x.ProductName).NotEmpty();
+            RuleFor(x => x.ProductId).NotEmpty().WithMessage("Product ID is required.");
+            RuleFor(x => x.Quantity).GreaterThan(0).WithMessage("Quantity must be a positive number.");
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be a positive number.");
+            RuleFor(x => x.ProductName).NotEmpty().WithMessage("Product name is required.");
         }
     }
     public class CreateBasketHandler(BasketDbContext _context) : ICommandHandler<CreateBasketCommand, CreateBasketResult>
@@ -34,12 +32,12 @@ namespace Basket.Basket.Feature.CreateBasket
         private static ShoppingCart CreateBasket(ShoppingCartDto shoppingCartDto)
         {
             var shoppingCart = ShoppingCart.Create(Guid.NewGuid(), shoppingCartDto.UserName);
-            shoppingCartDto.Items.ForEach(item=>
-            { 
+            shoppingCartDto.Items.ForEach(item =>
+            {
                 shoppingCart.AddItem(item.ProductId, item.Quantity, item.Color, item.Price, item.ProductName);
-            }); ;
+            });
             return shoppingCart;
         }
     }
-    
+
 }

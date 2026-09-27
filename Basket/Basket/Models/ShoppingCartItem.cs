@@ -9,7 +9,7 @@
         //will come from the Catalog Module
         public decimal Price { get; private set; } = default!;
         public string ProductName { get; private set; } = default!;
-        internal ShoppingCartItem(Guid shoppingCartId, Guid productId,  int quantity, string color, decimal price, string productName)
+        internal ShoppingCartItem(Guid shoppingCartId, Guid productId, int quantity, string color, decimal price, string productName)
         {
 
             ShoppingCartId = shoppingCartId;

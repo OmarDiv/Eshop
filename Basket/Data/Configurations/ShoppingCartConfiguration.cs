@@ -15,7 +15,7 @@
                 .WithOne()
                 .HasForeignKey(x => x.ShoppingCartId)
                 .OnDelete(DeleteBehavior.Cascade);
-           
+
         }
     }
 }

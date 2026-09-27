@@ -1,6 +1,4 @@
-﻿using Basket.Basket.Models;
-
-namespace Basket.Data
+﻿namespace Basket.Data
 {
     public class BasketDbContext : DbContext
     {

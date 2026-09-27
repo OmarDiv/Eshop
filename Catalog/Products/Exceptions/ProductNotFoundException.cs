@@ -1,6 +1,4 @@
-﻿using Shared.Exceptions;
-
-namespace Catalog.Products.Exceptions
+﻿namespace Catalog.Products.Exceptions
 {
     public class ProductNotFoundException : NotFoundException
     {

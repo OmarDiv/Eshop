@@ -1,13 +1,9 @@
-﻿using Basket.Data;
-using FluentValidation;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Behaviors;
 using Shared.Data;
 using Shared.Data.Interceptors;
-using Shared.Data.Seed;
 
 namespace Basket
 {
