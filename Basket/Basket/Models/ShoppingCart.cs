@@ -4,10 +4,10 @@
     {
         public string UserName { get; private set; } = default!;
 
-        private readonly List<ShoppingCartItem> _items = [];
+        private readonly List<ShoppingCartItem> _shoppingCartItems = [];
 
-        public IReadOnlyCollection<ShoppingCartItem> ShoppingCartItems => _items.AsReadOnly();
-        public decimal TotalPrice => _items.Sum(x => x.Price * x.Quantity);
+        public IReadOnlyCollection<ShoppingCartItem> ShoppingCartItems => _shoppingCartItems.AsReadOnly();
+        public decimal TotalPrice => _shoppingCartItems.Sum(x => x.Price * x.Quantity);
 
         public static ShoppingCart Create(Guid id, string userName)
         {
@@ -23,7 +23,7 @@
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(Quantity);
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(Price);
-            var existingItem = _items.FirstOrDefault(x => x.ProductId == ProductId && x.Color == Color);
+            var existingItem = _shoppingCartItems.FirstOrDefault(x => x.ProductId == ProductId && x.Color == Color);
             if (existingItem != null)
             {
                 existingItem.Quantity += Quantity;
@@ -32,15 +32,15 @@
             else
             {
                 var item = new ShoppingCartItem(this.Id, ProductId, Quantity, Color, Price, ProductName);
-                _items.Add(item);
+                _shoppingCartItems.Add(item);
             }
         }
         public void RemoveItem(Guid ProductId)
         {
-            var existingItem = _items.FirstOrDefault(x => x.ProductId == ProductId);
+            var existingItem = _shoppingCartItems.FirstOrDefault(x => x.ProductId == ProductId);
             if (existingItem != null)
             {
-                _items.Remove(existingItem);
+                _shoppingCartItems.Remove(existingItem);
             }
 
         }

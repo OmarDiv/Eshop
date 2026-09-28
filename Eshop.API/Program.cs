@@ -1,5 +1,8 @@
 using Carter;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Serilog;
+using Shared.Data.Interceptors;
 using Shared.Exceptions.Handler;
 using Shared.Extentions;
 var builder = WebApplication.CreateBuilder(args);
@@ -10,10 +13,16 @@ builder.Host.UseSerilog((context, configuration) =>
 });
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddCarterWithAssmblies(
-    typeof(CatalogModule).Assembly
-   , typeof(BasketModule).Assembly
-   , typeof(OrderingModule).Assembly);
+
+var CatalogAssembly = typeof(CatalogModule).Assembly;
+var BasketAssembly = typeof(BasketModule).Assembly;
+var OrderingAssembly = typeof(OrderingModule).Assembly;
+
+builder.Services.AddCarterWithAssmblies(CatalogAssembly, BasketAssembly, OrderingAssembly);
+builder.Services.AddMediatRWithAssmblies(CatalogAssembly, BasketAssembly, OrderingAssembly);
+
+builder.Services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+builder.Services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventInterceptor>();
 
 builder.Services
     .AddCatalogModule(builder.Configuration)

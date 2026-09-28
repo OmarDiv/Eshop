@@ -17,14 +17,17 @@ namespace Basket.Basket.Feature.GetBasket
             var Basket = await _context
                 .ShoppingCarts
                 .AsNoTracking()
-                .Where(c => c.UserName == request.UserName)
+                .Where(x=>x.UserName == request.UserName)
                 .Include(x => x.ShoppingCartItems)
                 .ProjectToType<ShoppingCartDto>()
                 .SingleOrDefaultAsync(cancellationToken);
-            if(Basket is null)
+
+            if (Basket is null)
             {
                 throw new BasketNotFoundException(request.UserName);
             }
+
+
             return new GetBasketResult(Basket);
         } 
     }

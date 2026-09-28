@@ -12,17 +12,6 @@ namespace Basket
         public static IServiceCollection AddBasketModule(this IServiceCollection services, IConfiguration configuration)
         {
 
-
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(cfg =>
-            {
-                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-                cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
-                cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
-            }
-            );
-            services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
-            services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventInterceptor>();
             services.AddDbContext<BasketDbContext>((IServiceProvider s, DbContextOptionsBuilder options) =>
             {
                 options.UseNpgsql(configuration.GetConnectionString("Database"));

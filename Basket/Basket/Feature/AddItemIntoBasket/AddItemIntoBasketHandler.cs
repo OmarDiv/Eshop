@@ -17,13 +17,13 @@
     {
         public async Task<AddItemToBasketResult> Handle(AddItemToBasketCommand request, CancellationToken cancellationToken)
         {
-            var shoppingCart = await _context.ShoppingCarts.SingleOrDefaultAsync(c => c.UserName == request.UserName);
+            var shoppingCart = await _context.ShoppingCarts.Include(x=>x.ShoppingCartItems).SingleOrDefaultAsync(c => c.UserName == request.UserName);
             if (shoppingCart is null)
             {
                 throw new BasketNotFoundException(request.UserName);
             }
             shoppingCart.AddItem(
-                request.ShoppingCartItem.,
+                request.ShoppingCartItem.ProductId,
                 request.ShoppingCartItem.Quantity,
                 request.ShoppingCartItem.Color,
                 request.ShoppingCartItem.Price,
