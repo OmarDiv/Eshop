@@ -2,7 +2,7 @@
 namespace Basket.Basket.Feature.GetBasket
 {
     public record GetBasketQuery(string UserName) : IQuery<GetBasketResult>;
-    public record GetBasketResult(ShoppingCartDto Basket);
+    public record GetBasketResult(ShoppingCartDto ShoppingCart);
     public class GetBasketQueryValidator : AbstractValidator<GetBasketQuery>
     {
         public GetBasketQueryValidator()

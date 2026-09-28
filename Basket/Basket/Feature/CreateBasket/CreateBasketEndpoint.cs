@@ -6,15 +6,17 @@
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/basket", async (CreateBasketRequest request, ISender sender) =>
+                app.MapPost("/basket", async (CreateBasketRequest request, ISender sender) =>
             {
-                var command = new CreateBasketCommand(request.ShoppingCart);
+                var command = request.Adapt<CreateBasketCommand>();
                 var result = await sender.Send(command);
-                return Results.Created($"/basket/{result.Id}", result);
+                var response = result.Adapt<CreateBasketResponse>();
+                return Results.Created($"/basket/{response.Id}", response);
             })
             .WithName("CreateBasket")
             .Produces<CreateBasketResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithSummary("Creates a new basket.")
             .WithDescription("Creates a new basket.");
         }
     }

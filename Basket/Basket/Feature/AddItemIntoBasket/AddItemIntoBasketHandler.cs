@@ -1,15 +1,15 @@
 ﻿namespace Basket.Basket.Feature.AddItemToBasket
 {
-    public record AddItemToBasketCommand(string UserName, ShoppingCartItemDto Item) : ICommand<AddItemToBasketResult>;
+    public record AddItemToBasketCommand(string UserName, ShoppingCartItemDto ShoppingCartItem) : ICommand<AddItemToBasketResult>;
 
-    public record AddItemToBasketResult(bool Success);
+    public record AddItemToBasketResult(Guid Id);
 
     public class AddItemToBasketCommandValidator : AbstractValidator<AddItemToBasketCommand>
     {
         public AddItemToBasketCommandValidator()
         {
             RuleFor(x => x.UserName).NotEmpty().WithMessage("User name is required.");
-            RuleFor(x => x.Item).NotNull().WithMessage("Item is required.").SetValidator(new ShoppingCartItemDtoValidator());
+            RuleFor(x => x.ShoppingCartItem).NotNull().WithMessage("Item is required.").SetValidator(new ShoppingCartItemDtoValidator());
         }
     }
 
@@ -23,15 +23,15 @@
                 throw new BasketNotFoundException(request.UserName);
             }
             shoppingCart.AddItem(
-                request.Item.ProductId,
-                request.Item.Quantity,
-                request.Item.Color,
-                request.Item.Price,
-                request.Item.ProductName
+                request.ShoppingCartItem.,
+                request.ShoppingCartItem.Quantity,
+                request.ShoppingCartItem.Color,
+                request.ShoppingCartItem.Price,
+                request.ShoppingCartItem.ProductName
             );
 
             await _context.SaveChangesAsync(cancellationToken);
-            return new AddItemToBasketResult(true);
+            return new AddItemToBasketResult(shoppingCart.Id);
         }
     }
 }

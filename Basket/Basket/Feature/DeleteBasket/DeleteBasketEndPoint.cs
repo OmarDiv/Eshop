@@ -5,15 +5,17 @@
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapDelete("/basket/{UserName}", async (string UserName, ISender sender) =>
+            app.MapDelete("/basket/{userName}", async (string userName, ISender sender) =>
             {
-                var command = new DeleteBasketCommand(UserName);
+                var command = new DeleteBasketCommand(userName);
                 var result = await sender.Send(command);
-                return Results.Ok(new DeleteBasketResponse(result.Success));
+                var response = result.Adapt<DeleteBasketResponse>();
+                return Results.Ok(response);
             })
             .WithName("DeleteBasket")
             .Produces<DeleteBasketResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithSummary("Deletes a basket by User Name.")
             .WithDescription("Deletes a basket by User Name.");
         }
     }

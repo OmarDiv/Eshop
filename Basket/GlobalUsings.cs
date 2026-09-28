@@ -15,4 +15,4 @@ global using Shared.CQRS;
 global using Shared.DDD;
 global using System.Reflection;
 global using Mapster;
-
+global using Microsoft.AspNetCore.Mvc;

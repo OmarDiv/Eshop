@@ -18,7 +18,7 @@
         public async Task<RemoveItemFromBasketResult> Handle(RemoveItemFromBasketCommand request, CancellationToken cancellationToken)
         {
             var shoppingCart = await _context.ShoppingCarts
-                .Include(x => x.ShoppingCartItems) // من غير Filter، من غير AsNoTracking
+                .Include(x => x.ShoppingCartItems)
                 .SingleOrDefaultAsync(c => c.UserName == request.UserName, cancellationToken);
 
             if (shoppingCart is null)
@@ -27,7 +27,7 @@
             shoppingCart.RemoveItem(request.ProductId);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return new RemoveItemFromBasketResult(request.ProductId);
+            return new RemoveItemFromBasketResult(shoppingCart.Id);
         }
     }
 }
