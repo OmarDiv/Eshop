@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Behaviors;
 using Shared.Data;
-using Shared.Data.Interceptors;
-
+ 
 namespace Basket
 {
     public static class BasketModule
     {
         public static IServiceCollection AddBasketModule(this IServiceCollection services, IConfiguration configuration)
         {
+
+           
 
             services.AddDbContext<BasketDbContext>((IServiceProvider s, DbContextOptionsBuilder options) =>
             {

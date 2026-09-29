@@ -10,25 +10,13 @@ namespace Basket.Basket.Feature.GetBasket
             RuleFor(x => x.UserName).NotEmpty().WithMessage("User name is required.");
         }
     }
-    public class GetBasketHandler(BasketDbContext _context) : IQueryHandler<GetBasketQuery, GetBasketResult>
+    public class GetBasketHandler(IBasketRepository _basketRepository) : IQueryHandler<GetBasketQuery, GetBasketResult>
     {
         public async Task<GetBasketResult> Handle(GetBasketQuery request, CancellationToken cancellationToken)
         { 
-            var Basket = await _context
-                .ShoppingCarts
-                .AsNoTracking()
-                .Where(x=>x.UserName == request.UserName)
-                .Include(x => x.ShoppingCartItems)
-                .ProjectToType<ShoppingCartDto>()
-                .SingleOrDefaultAsync(cancellationToken);
-
-            if (Basket is null)
-            {
-                throw new BasketNotFoundException(request.UserName);
-            }
-
-
-            return new GetBasketResult(Basket);
+           var basket = await _basketRepository.GetBasketAsync(request.UserName);
+            var result = basket.Adapt<ShoppingCartDto>();   
+            return new GetBasketResult(result);
         } 
     }
 }

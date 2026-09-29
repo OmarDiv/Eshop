@@ -9,18 +9,12 @@
             RuleFor(x => x.UserName).NotEmpty().WithMessage("User name is required.");
         }
     }
-    public class DeleteBasketHandler(BasketDbContext _context) : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
+    public class DeleteBasketHandler(IBasketRepository _basketRepository) : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
     {
         public async Task<DeleteBasketResult> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
         {
-            var shoppingCart = await _context.ShoppingCarts.SingleOrDefaultAsync(c => c.UserName == request.UserName, cancellationToken);
-            if (shoppingCart is null)
-            {
-                throw new BasketNotFoundException(request.UserName);
-            }
-
-            _context.ShoppingCarts.Remove(shoppingCart);
-            await _context.SaveChangesAsync(cancellationToken);
+            
+            await _basketRepository.DeleteBasketAsync(request.UserName, cancellationToken);
             return new DeleteBasketResult(true);
         }
     }

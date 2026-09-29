@@ -20,13 +20,12 @@
             RuleFor(x => x.ProductName).NotEmpty().WithMessage("Product name is required.");
         }
     }
-    public class CreateBasketHandler(BasketDbContext _context) : ICommandHandler<CreateBasketCommand, CreateBasketResult>
+    public class CreateBasketHandler(IBasketRepository _basketRepository) : ICommandHandler<CreateBasketCommand, CreateBasketResult>
     {
         public async Task<CreateBasketResult> Handle(CreateBasketCommand request, CancellationToken cancellationToken)
         {
             var shoppingCart = CreateBasket(request.ShoppingCart);
-            await _context.ShoppingCarts.AddAsync(shoppingCart, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _basketRepository.CreateBasketAsync(shoppingCart, cancellationToken);
             return new CreateBasketResult(shoppingCart.Id);
         }
         private static ShoppingCart CreateBasket(ShoppingCartDto shoppingCartDto)

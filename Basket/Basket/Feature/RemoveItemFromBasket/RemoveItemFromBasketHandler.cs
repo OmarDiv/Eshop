@@ -12,20 +12,15 @@
         }
     }
 
-    public class RemoveItemFromBasketHandler(BasketDbContext _context)
+    public class RemoveItemFromBasketHandler(IBasketRepository _basketRepository)
         : ICommandHandler<RemoveItemFromBasketCommand, RemoveItemFromBasketResult>
     {
         public async Task<RemoveItemFromBasketResult> Handle(RemoveItemFromBasketCommand request, CancellationToken cancellationToken)
         {
-            var shoppingCart = await _context.ShoppingCarts
-                .Include(x => x.ShoppingCartItems)
-                .SingleOrDefaultAsync(c => c.UserName == request.UserName, cancellationToken);
-
-            if (shoppingCart is null)
-                throw new BasketNotFoundException(request.UserName);
+            var shoppingCart = await _basketRepository.GetBasketAsync(request.UserName,false, cancellationToken);
 
             shoppingCart.RemoveItem(request.ProductId);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _basketRepository.SaveChangesAsync(cancellationToken);
 
             return new RemoveItemFromBasketResult(shoppingCart.Id);
         }

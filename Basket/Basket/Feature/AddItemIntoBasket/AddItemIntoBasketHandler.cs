@@ -13,16 +13,12 @@
         }
     }
 
-    public class AddItemIntoBasketHandler(BasketDbContext _context) : ICommandHandler<AddItemToBasketCommand, AddItemToBasketResult>
+    public class AddItemIntoBasketHandler(IBasketRepository _basketRepository) : ICommandHandler<AddItemToBasketCommand, AddItemToBasketResult>
     {
         public async Task<AddItemToBasketResult> Handle(AddItemToBasketCommand request, CancellationToken cancellationToken)
         {
-            var shoppingCart = await _context.ShoppingCarts.Include(x=>x.ShoppingCartItems).SingleOrDefaultAsync(c => c.UserName == request.UserName);
-            if (shoppingCart is null)
-            {
-                throw new BasketNotFoundException(request.UserName);
-            }
-            shoppingCart.AddItem(
+            var shoppingCart = await _basketRepository.GetBasketAsync(request.UserName , false, cancellationToken);
+            shoppingCart.AddItem( 
                 request.ShoppingCartItem.ProductId,
                 request.ShoppingCartItem.Quantity,
                 request.ShoppingCartItem.Color,
@@ -30,7 +26,7 @@
                 request.ShoppingCartItem.ProductName
             );
 
-            await _context.SaveChangesAsync(cancellationToken);
+            await _basketRepository.SaveChangesAsync(cancellationToken);
             return new AddItemToBasketResult(shoppingCart.Id);
         }
     }
