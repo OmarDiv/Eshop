@@ -22,7 +22,7 @@
             await _context.SaveChangesAsync(cancellationToken);
             return basket;
         }
-
+        
         public async Task<bool> DeleteBasketAsync(string userName, CancellationToken cancellationToken = default)
         {
             var basket = await GetBasketAsync(userName,false ,cancellationToken: cancellationToken);

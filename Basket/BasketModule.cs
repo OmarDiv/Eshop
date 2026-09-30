@@ -10,7 +10,8 @@ namespace Basket
         public static IServiceCollection AddBasketModule(this IServiceCollection services, IConfiguration configuration)
         {
 
-           
+            services.AddScoped<IBasketRepository, BasketRepository>();
+            services.Decorate<IBasketRepository, CachedBasketRepository>();
 
             services.AddDbContext<BasketDbContext>((IServiceProvider s, DbContextOptionsBuilder options) =>
             {

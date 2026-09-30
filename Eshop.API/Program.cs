@@ -13,7 +13,10 @@ builder.Host.UseSerilog((context, configuration) =>
 });
 
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddStackExchangeRedisCache(cfg =>
+{
+    cfg.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
 var CatalogAssembly = typeof(CatalogModule).Assembly;
 var BasketAssembly = typeof(BasketModule).Assembly;
 var OrderingAssembly = typeof(OrderingModule).Assembly;
