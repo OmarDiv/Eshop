@@ -1,5 +1,4 @@
 using Carter;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Serilog;
 using Shared.Data.Interceptors;

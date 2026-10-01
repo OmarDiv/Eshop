@@ -7,12 +7,14 @@
     <Project Path="Basket/Basket.csproj" />
   </Folder>
   <Folder Name="/Modules/Catalog/">
+    <Project Path="../Catalog.Contracts/Catalog.Contracts.csproj" Id="c7825e32-25fd-4a4a-be73-1ea1ff4dd230" />
     <Project Path="Catalog/Catalog.csproj" />
   </Folder>
   <Folder Name="/Modules/Ordering/">
     <Project Path="Ordering/Ordering.csproj" />
   </Folder>
   <Folder Name="/Shared/">
+    <Project Path="../Shared.Contract/Shared.Contract.csproj" Id="4cd50b43-cc52-4bec-983d-4ae3f35ca513" />
     <Project Path="Shared/Shared.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">

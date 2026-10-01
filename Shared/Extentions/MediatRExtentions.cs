@@ -6,9 +6,9 @@ namespace Shared.Extentions
 {
     public static class MediatRExtentions
     {
-        public static IServiceCollection AddMediatRWithAssmblies(this IServiceCollection services , params Assembly[] assemblies)
+        public static IServiceCollection AddMediatRWithAssmblies(this IServiceCollection services, params Assembly[] assemblies)
         {
-            services.AddMediatR(cfg=>
+            services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssemblies(assemblies);
                 cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));

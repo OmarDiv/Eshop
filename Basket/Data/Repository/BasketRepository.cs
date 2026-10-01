@@ -8,7 +8,7 @@
                 .Include(b => b.ShoppingCartItems)
                 .Where(b => b.UserName == userName);
 
-              if(asNoTracking)
+            if (asNoTracking)
             {
                 query.AsNoTracking();
             }
@@ -22,10 +22,10 @@
             await _context.SaveChangesAsync(cancellationToken);
             return basket;
         }
-        
+
         public async Task<bool> DeleteBasketAsync(string userName, CancellationToken cancellationToken = default)
         {
-            var basket = await GetBasketAsync(userName,false ,cancellationToken: cancellationToken);
+            var basket = await GetBasketAsync(userName, false, cancellationToken: cancellationToken);
 
             _context.ShoppingCarts.Remove(basket);
             await _context.SaveChangesAsync(cancellationToken);

@@ -6,7 +6,7 @@
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/basket", async ([FromBody]CreateBasketRequest request, ISender sender) =>
+            app.MapPost("/basket", async ([FromBody] CreateBasketRequest request, ISender sender) =>
             {
                 var command = request.Adapt<CreateBasketCommand>();
                 var result = await sender.Send(command);

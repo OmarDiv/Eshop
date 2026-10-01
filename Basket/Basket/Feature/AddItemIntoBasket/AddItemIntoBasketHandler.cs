@@ -17,8 +17,8 @@
     {
         public async Task<AddItemToBasketResult> Handle(AddItemToBasketCommand request, CancellationToken cancellationToken)
         {
-            var shoppingCart = await _basketRepository.GetBasketAsync(request.UserName , false, cancellationToken);
-            shoppingCart.AddItem( 
+            var shoppingCart = await _basketRepository.GetBasketAsync(request.UserName, false, cancellationToken);
+            shoppingCart.AddItem(
                 request.ShoppingCartItem.ProductId,
                 request.ShoppingCartItem.Quantity,
                 request.ShoppingCartItem.Color,

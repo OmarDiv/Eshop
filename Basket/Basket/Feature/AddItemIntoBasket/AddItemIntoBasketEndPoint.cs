@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Basket.Basket.Feature.AddItemToBasket
+﻿namespace Basket.Basket.Feature.AddItemToBasket
 {
     public record AddItemToBasketRequest(string UserName, ShoppingCartItemDto ShoppingCartItem);
     public record AddItemToBasketResponse(Guid Id);
@@ -8,7 +6,7 @@ namespace Basket.Basket.Feature.AddItemToBasket
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/basket/{userName}/items", async ([FromRoute]string userName, [FromBody]AddItemToBasketRequest request, ISender sender) =>
+            app.MapPost("/basket/{userName}/items", async ([FromRoute] string userName, [FromBody] AddItemToBasketRequest request, ISender sender) =>
             {
                 var command = new AddItemToBasketCommand(userName, request.ShoppingCartItem);
                 var result = await sender.Send(command);

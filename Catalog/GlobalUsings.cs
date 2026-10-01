@@ -1,7 +1,6 @@
 ﻿global using Carter;
 global using Catalog.Data;
 global using Catalog.Data.Seed;
-global using Catalog.Products.Dtos;
 global using Catalog.Products.Events;
 global using Catalog.Products.Exceptions;
 global using Catalog.Products.Models;
@@ -13,7 +12,8 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Routing;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
-global using Shared.CQRS;
+global using Shared.Contract.CQRS;
+global using Shared.Contract.Dtos;
 global using Shared.Data;
 global using Shared.Data.Seed;
 global using Shared.DDD;

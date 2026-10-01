@@ -17,7 +17,7 @@
     {
         public async Task<RemoveItemFromBasketResult> Handle(RemoveItemFromBasketCommand request, CancellationToken cancellationToken)
         {
-            var shoppingCart = await _basketRepository.GetBasketAsync(request.UserName,false, cancellationToken);
+            var shoppingCart = await _basketRepository.GetBasketAsync(request.UserName, false, cancellationToken);
 
             shoppingCart.RemoveItem(request.ProductId);
             await _basketRepository.SaveChangesAsync(cancellationToken);

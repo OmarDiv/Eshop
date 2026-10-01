@@ -38,8 +38,6 @@ namespace Basket.Data.Repository
                 }
                 catch (JsonException ex)
                 {
-                    // Corrupted cache entry — treat as cache miss and fall back to repository.
-                    // This prevents a single bad entry from crashing the entire request.
                     _logger.LogWarning(ex, "Corrupted basket cache entry for user {UserName}, falling back to repository", userName);
                 }
             }
