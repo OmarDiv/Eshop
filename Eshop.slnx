@@ -1,21 +1,21 @@
 <Solution>
   <Folder Name="/Bootstrapper/">
-    <Project Path="Eshop.API/Eshop.API.csproj" />
+    <Project Path="Bootstrapper/Eshop.API/Eshop.API.csproj" />
   </Folder>
   <Folder Name="/Modules/" />
   <Folder Name="/Modules/Basket/">
-    <Project Path="Basket/Basket.csproj" />
+    <Project Path="Modules/Basket/Basket/Basket.csproj" />
   </Folder>
   <Folder Name="/Modules/Catalog/">
-    <Project Path="../Catalog.Contracts/Catalog.Contracts.csproj" Id="c7825e32-25fd-4a4a-be73-1ea1ff4dd230" />
-    <Project Path="Catalog/Catalog.csproj" />
+    <Project Path="Modules/Catalog/Catalog.Contracts/Catalog.Contracts.csproj" Id="d0563255-9c34-407f-8b1a-9069116ee9da" />
+    <Project Path="Modules/Catalog/Catalog/Catalog.csproj" />
   </Folder>
   <Folder Name="/Modules/Ordering/">
-    <Project Path="Ordering/Ordering.csproj" />
+    <Project Path="Modules/Ordering/Ordering/Ordering.csproj" />
   </Folder>
   <Folder Name="/Shared/">
-    <Project Path="../Shared.Contract/Shared.Contract.csproj" Id="4cd50b43-cc52-4bec-983d-4ae3f35ca513" />
-    <Project Path="Shared/Shared.csproj" />
+    <Project Path="Shared/Shared.Contracts/Shared.Contracts.csproj" />
+    <Project Path="Shared/Shared/Shared.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
