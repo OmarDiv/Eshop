@@ -4,7 +4,7 @@ namespace Basket.Basket.Models
     {
         public Guid ShoppingCartId { get; private set; } = default!;
         public Guid ProductId { get; private set; } = default!;
-        public int Quantity { get; private set; } = default!;
+        public int Quantity { get; internal set; } = default!;
         public string Color { get; private set; } = default!;
         //will come from the Catalog Module
         public decimal Price { get; private set; } = default!;
@@ -22,6 +22,11 @@ namespace Basket.Basket.Models
             Color = color;
             Price = price;
             ProductName = productName;
+        }
+        public void UpdatePrice(decimal newPrice)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(newPrice);
+            Price = newPrice;
         }
 
         internal void IncreaseQuantity(int amount)

@@ -6,6 +6,5 @@
         Task<ShoppingCart> CreateBasketAsync(ShoppingCart basket, CancellationToken cancellationToken = default);
         Task<bool> DeleteBasketAsync(string userName, CancellationToken cancellationToken = default);
         Task<int> SaveChangesAsync(string userName, CancellationToken cancellationToken = default);
-
     }
 }
