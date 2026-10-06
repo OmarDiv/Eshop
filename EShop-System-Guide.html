@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل سيستم EShop - الدليل الشامل للمقابلة</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #cbd5e1;
+            --sidebar-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --code-bg: #1e1e1e;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 300px;
+            background-color: var(--sidebar-bg);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            border-left: 1px solid var(--border-color);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h2 {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+        .sidebar a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 8px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: var(--border-color);
+            color: #fff;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: 300px;
+            padding: 40px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+        }
+        h1 { border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { margin-top: 50px; color: var(--accent-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        
+        p, li { margin-bottom: 15px; }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg) !important;
+            border-radius: 8px;
+            padding: 15px !important;
+            border: 1px solid var(--border-color);
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        /* Cards & Info boxes */
+        .info-box {
+            background-color: rgba(56, 189, 248, 0.1);
+            border-right: 4px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-right: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--card-bg);
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            text-align: right;
+        }
+        th { background-color: var(--border-color); color: #fff; }
+
+        /* Diagrams */
+        .diagram {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+            direction: ltr;
+        }
+        .flow-box {
+            background-color: var(--sidebar-bg);
+            border: 1px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .flow-arrow {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            .main-content { margin-right: 0; padding: 0; }
+            body { background: white; color: black; }
+            pre { background: #f4f4f4 !important; border: 1px solid #ccc; color: #333; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h2>فهرس المحتويات</h2>
+        <ul>
+            <li><a href="#section-1">1. نظرة عامة على السيستم (Architecture)</a></li>
+            <li><a href="#section-2">2. الـ DDD Building Blocks</a></li>
+            <li><a href="#section-3">3. مثال الـ Product Aggregate</a></li>
+            <li><a href="#section-4">4. نمط CQRS مع MediatR</a></li>
+            <li><a href="#section-5">5. الـ Pipeline Behaviors في MediatR</a></li>
+            <li><a href="#section-6">6. الـ Domain Events الداعمة In-Memory</a></li>
+            <li><a href="#section-7">7. الـ Integration Events (RabbitMQ + MassTransit)</a></li>
+            <li><a href="#section-8">8. شرح واجهة RabbitMQ</a></li>
+            <li><a href="#section-9">9. الـ Docker Infrastructure</a></li>
+            <li><a href="#section-10">10. سلة المشتريات (Basket) و الـ Caching</a></li>
+            <li><a href="#section-11">11. التواصل بين الـ Modules</a></li>
+            <li><a href="#section-12">12. الـ Bootstrapper</a></li>
+            <li><a href="#section-13">13. أسئلة المقابلة وإجاباتها النموذجية</a></li>
+            <li><a href="#section-14">14. الفجوات الحالية والتحسينات المستقبلية</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>دليل سيستم EShop - الشرح المعماري الشامل</h1>
+        <div class="info-box">
+            هذا الدليل تم تصميمه خصيصاً عشان يغطي كل تفصيلة في الـ System من الصفر ولحد أعقد نقطة زي الـ RabbitMQ.
+            الدليل ده هيكون مرجعك الأساسي قبل وأثناء الانترفيو عشان تقدر ترد بثقة على أي سؤال، لأنك هتكون فاهم الكود شغال إزاي تحت الكبوت.
+        </div>
+
+        <!-- Section 1 -->
+        <section id="section-1">
+            <h2>1. نظرة عامة على السيستم (System Overview & Architecture)</h2>
+            <p>
+                المشروع ده مبني بـ <strong>ASP.NET Core 10</strong> وبيعتمد على معمارية اسمها <strong>Modular Monolith</strong>، وهي معمارية قوية جداً بتجمع بين بساطة الـ Monolith وقوة الـ Microservices في التنظيم.
+            </p>
+            
+            <h3>شكل المشروع (Solution Structure):</h3>
+            <pre><code class="language-bash">EShop/
+├── Bootstrapper/
+│   └── Eshop.API/          ← الـ Host الرئيسي اللي بيشغل كل حاجة
+├── Modules/
+│   ├── Catalog/             ← موديول المنتجات (مستقل)
+│   ├── Basket/              ← موديول السلة (مستقل)
+│   └── Ordering/            ← موديول الطلبات (مستقل)
+├── Shared/
+│   ├── Shared/              ← الكلاسات الأساسية (DDD, Behaviors)
+│   ├── Shared.Contracts/    ← الحاجات اللي الـ Modules بتكلم بعض بيها (DTOs, Queries)
+│   └── Shared.Messaging/    ← الـ RabbitMQ و MassTransit
+└── docker-compose.yml       ← البنية التحتية</code></pre>
+
+            <div class="info-box">
+                <strong>ليه استخدمنا Modular Monolith ومش Microservices؟</strong><br>
+                <ul>
+                    <li>الـ Microservices بتضيف تعقيدات كبيرة (Network latency, Distributed Transactions, Deployment Complexity).</li>
+                    <li>الـ Modular Monolith بيخلينا نقسم الكود لـ Modules مستقلة (زي الـ Microservices بالظبط في الديزاين) بس في النهاية بنعملها Deploy كبرنامج واحد (Single Process).</li>
+                    <li>يعني بنستفيد من التنظيم العالي بدون ما ندفع ضريبة الـ Microservices. ولما المشروع يكبر جداً، نقدر ببساطة نفصل أي Module ونخليه Microservice حقيقية لأن الكود أصلاً مفصول.</li>
+                </ul>
+            </div>
+            <p>
+                <strong>أهم التقنيات المستخدمة:</strong> Domain-Driven Design (DDD), CQRS Pattern, Vertical Slice Architecture, RabbitMQ (MassTransit), PostgreSQL, Redis, Minimal APIs (Carter).
+            </p>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="section-2">
+            <h2>2. الـ Domain-Driven Design (DDD) Building Blocks</h2>
+            <p>
+                الـ DDD مش مجرد فولدرات، هو طريقة تفكير عشان نخلي الكود يعكس البيزنس الحقيقي. في فولدر <code>Shared.DDD</code> إحنا بنينا الأساسيات اللي أي Entity أو Aggregate بيمشي عليها.
+            </p>
+
+            <h3>1. الـ Entities (الكائنات):</h3>
+            <p>الـ Entity هو أي حاجة ليها <strong>Identity (رقم تعريفي)</strong> مميز. يعني لو عندي اتنين Products نفس الاسم ونفس السعر بس الـ Id مختلف، يبقوا حاجتين مختلفتين.</p>
+            <pre><code class="language-csharp">public interface IEntity&lt;TId&gt; : IEntity
+{
+    public TId Id { get; set; }
+}
+
+public interface IEntity
+{
+    // دول بنسميهم Audit Properties (عشان نعرف مين عمل ايه وامتى)
+    public string? CreatedBy { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public string? LastModifiedBy { get; set; }
+    public DateTime? LastModifiedAt { get; set; }
+}
+
+public abstract class Entity&lt;TId&gt; : IEntity&lt;TId&gt;
+{
+    public TId Id { get; set; }
+    public string? CreatedBy { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public string? LastModifiedBy { get; set; }
+    public DateTime? LastModifiedAt { get; set; }
+}</code></pre>
+
+            <h3>2. الـ Domain Events (أحداث البيزنس):</h3>
+            <p>لما حاجة مهمة تحصل في النظام (زي إن منتج يتضاف أو سعره يتغير)، بنعمل حدث (Event) عشان نبلغ باقي الكود. الـ <code>IDomainEvent</code> بيورث من <code>INotification</code> الخاص بـ MediatR عشان يقدر يتعامل معاه وينشره في الميموري.</p>
+            <pre><code class="language-csharp">public interface IDomainEvent : INotification
+{
+    Guid EventId => Guid.NewGuid();
+    public DateTime OccurredOn => DateTime.UtcNow;
+    public string EventType => GetType().AssemblyQualifiedName!;
+}</code></pre>
+
+            <h3>3. الـ Aggregate Root (الجذور المجمعة):</h3>
+            <p>الـ Aggregate Root هو نوع خاص من الـ Entities، بيمثل <strong>الباب الرئيسي</strong> لأي تعديل في مجموعة مترابطة. مفيش أي تعديل بيحصل إلا من خلاله عشان نحافظ على الـ Data Consistency. الـ Aggregate Root كمان بيكون جواه لستة للـ Domain Events اللي حصلت فيه.</p>
+            <pre><code class="language-csharp">public interface IAggregate : IEntity
+{
+    IReadOnlyList&lt;IDomainEvent&gt; DomainEvents { get; }
+    IDomainEvent[] ClearDomainEvents();
+}
+
+public abstract class AggregateRoot&lt;TId&gt; : Entity&lt;TId&gt;, IAggregate&lt;TId&gt;
+{
+    private readonly List&lt;IDomainEvent&gt; _domainEvents = [];
+    public IReadOnlyList&lt;IDomainEvent&gt; DomainEvents => _domainEvents.AsReadOnly();
+
+    public IDomainEvent[] ClearDomainEvents()
+    {
+        var events = _domainEvents.ToArray();
+        _domainEvents.Clear();
+        return events;
+    }
+    
+    protected void AddDomainEvent(IDomainEvent domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
+    }
+}</code></pre>
+            <div class="info-box">
+                <strong>الخلاصة:</strong> الـ Entity ليه ID. الـ Aggregate Root هو Entity كبير بيحمي نفسه وبيسجل الأحداث (Domain Events) اللي بتحصل جواه. 
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="section-3">
+            <h2>3. مثال الـ Product Aggregate (تطبيق عملي)</h2>
+            <p>خلينا نشوف الـ <code>Product</code> إزاي بيطبق المفاهيم دي في الكود الحقيقي:</p>
+            <pre><code class="language-csharp">public class Product : AggregateRoot&lt;Guid&gt;
+{
+    // Properties كلها private set عشان نمنع أي تعديل عشوائي من برة (Encapsulation)
+    public string Name { get; private set; } = default!;
+    public List&lt;string&gt; Category { get; private set; } = default!;
+    public string Description { get; private set; } = default!;
+    public string ImageFile { get; private set; } = default!;
+    public decimal Price { get; private set; }
+    
+    // Static Factory Method لإنشاء المنتج بدل الـ Constructor
+    public static Product Create(Guid id, string name, List&lt;string&gt; category, string description, string imageFile, decimal price)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+        
+        var product = new Product
+        {
+            Id = id, Name = name, Category = category,
+            Description = description, ImageFile = imageFile, Price = price,
+        };
+        
+        // أول ما ننشئ المنتج، بنسجل إن الحدث ده حصل
+        product.AddDomainEvent(new ProductCreatedEvent(product));
+        return product;
+    }
+    
+    // دالة لتعديل المنتج
+    public void Update(string name, List&lt;string&gt; category, string description, string imageFile, decimal price)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+        
+        Name = name; Category = category;
+        Description = description; ImageFile = imageFile;
+        
+        // لو السعر اتغير فعلاً، بنضيف حدث جديد عشان نبلغ النظام (مهم جداً عشان تحديث السلة لاحقاً!)
+        if (Price != price)
+        {
+            Price = price;
+            AddDomainEvent(new ProductPriceChangedEvent(this));
+        }
+    }
+}</code></pre>
+            <div class="warning-box">
+                <strong>نقاط مهمة للإنترفيو:</strong><br>
+                1. ليه بنستخدم <code>private set</code>؟ عشان نحافظ على الـ Encapsulation. محدنش يقدر يعدل سعر المنتج مباشرة `product.Price = 50`، لازم يستخدم دالة <code>Update</code> اللي بتعمل Validation وبتضيف Event.<br>
+                2. ليه <code>Static Factory Method</code>؟ عشان بتخلي الكود مقروء أكتر (Product.Create) وبتدينا مكان واضح نحط فيه شروط الإنشاء والـ Events.
+            </div>
+            <p>الـ Events الخاصة بالمنتج بسيطة جداً وهي عبارة عن Records:</p>
+            <pre><code class="language-csharp">public record ProductCreatedEvent(Product Product) : IDomainEvent;
+public record ProductPriceChangedEvent(Product Product) : IDomainEvent;</code></pre>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="section-4">
+            <h2>4. نمط CQRS مع MediatR</h2>
+            <p>الـ CQRS (Command Query Responsibility Segregation) بيفصل عمليات القراءة (Queries) عن عمليات الكتابة والتعديل (Commands). إحنا هنا مستخدمين الـ Interfaces دي كـ Wrappers فوق MediatR عشان نوضح الـ Intent.</p>
+
+            <pre><code class="language-csharp">// Commands (كتابة أو تعديل - بترجع Response أو Unit)
+public interface ICommand : IRequest&lt;Unit&gt; { }
+public interface ICommand&lt;out TResponse&gt; : IRequest&lt;TResponse&gt; { }
+public interface ICommandHandler&lt;in TCommand, TResponse&gt;
+    : IRequestHandler&lt;TCommand, TResponse&gt;
+    where TCommand : ICommand&lt;TResponse&gt;
+    where TResponse : notnull { }
+
+// Queries (قراءة فقط)
+public interface IQuery&lt;out TResponse&gt; : IRequest&lt;TResponse&gt; { }
+public interface IQueryHandler&lt;in TQuery, TResponse&gt;
+    : IRequestHandler&lt;TQuery, TResponse&gt;
+    where TQuery : IQuery&lt;TResponse&gt;
+    where TResponse : notnull { }</code></pre>
+
+            <div class="info-box">
+                <strong>ليه التغليف (Wrappers) ده؟</strong><br>
+                1. <strong>الوضوح (Semantic clarity):</strong> مجرد ما تبص على الكلاس هتعرف هو Command ولا Query.<br>
+                2. <strong>القيود (Constraints):</strong> بنقدر نطبق Pipeline Behaviors على الـ Commands بس ومطبّقهاش على الـ Queries (زي الـ Validation مثلاً).
+            </div>
+
+            <h3>مثال كامل للـ CreateProduct:</h3>
+            <p>الـ Flow بيبدأ من الـ Carter Endpoint، بيبعت Command لـ MediatR، والـ Handler بينفذ البيزنس.</p>
+            <pre><code class="language-csharp">// 1. الـ Endpoint (Carter)
+public class CreateProductEndPoint : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        app.MapPost("/products", async (CreateProductRequest request, ISender sender) =>
+        {
+            var command = request.Adapt&lt;CreateProductCommand&gt;(); // Mapster
+            var result = await sender.Send(command); // MediatR
+            var response = result.Adapt&lt;CreateProductResponse&gt;();
+            return Results.Created($"/products/{response.ProductId}", response);
+        });
+    }
+}
+
+// 2. الـ Command والـ Handler
+public record CreateProductCommand(ProductDto Product) : ICommand&lt;CreateProductResult&gt;;
+public record CreateProductResult(Guid ProductId);
+
+public class CreateProductHandler(CatalogDbContext _context) 
+    : ICommandHandler&lt;CreateProductCommand, CreateProductResult&gt;
+{
+    public async Task&lt;CreateProductResult&gt; Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    {
+        var product = Product.Create(Guid.NewGuid(), request.Product.Name, ...);
+        _context.Products.Add(product);
+        await _context.SaveChangesAsync(cancellationToken);
+        return new CreateProductResult(product.Id);
+    }
+}
+
+// 3. الـ Validator (هيشتغل أوتوماتيك عبر الـ Pipeline Behavior)
+public class CreateProductCommandValidator : AbstractValidator&lt;CreateProductCommand&gt;
+{
+    public CreateProductCommandValidator()
+    {
+        RuleFor(x => x.Product).NotNull().WithMessage("Product is required");
+        RuleFor(x => x.Product.Name).NotEmpty();
+        RuleFor(x => x.Product.Price).GreaterThan(0);
+    }
+}</code></pre>
+            
+            <div class="diagram">
+                <h4>رحلة الـ Request (CQRS Flow)</h4>
+                <div class="flow-container">
+                    <div class="flow-box">HTTP Request</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box">Carter Endpoint</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box">Mapster</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box" style="background:#047857;">MediatR (ISender)</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box" style="background:#b45309;">Logging Behavior</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box" style="background:#b45309;">Validation Behavior</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box">Handler</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box">DbContext Save</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5 -->
+        <section id="section-5">
+            <h2>5. الـ Pipeline Behaviors في MediatR</h2>
+            <p>الـ Pipeline Behaviors عاملة زي الـ Middleware بس جوا MediatR. بتنفذ كود معين قبل وبعد كل Handler.</p>
+
+            <h3>1. الـ ValidationBehavior:</h3>
+            <pre><code class="language-csharp">public class ValidationBehavior&lt;TRequest, TResponse&gt;(IEnumerable&lt;IValidator&lt;TRequest&gt;&gt; validators) 
+    : IPipelineBehavior&lt;TRequest, TResponse&gt;
+    where TRequest : ICommand&lt;TResponse&gt; // ⚠️ ركز هنا!
+{
+    public async Task&lt;TResponse&gt; Handle(TRequest request, RequestHandlerDelegate&lt;TResponse&gt; next, CancellationToken cancellationToken)
+    {
+        var context = new ValidationContext&lt;TRequest&gt;(request);
+        var validationResult = await Task.WhenAll(validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+        var failures = validationResult.Where(r => r.Errors.Any()).SelectMany(r => r.Errors).ToList();
+        
+        if (failures.Any())
+            throw new ValidationException(failures);
+            
+        return await next(cancellationToken);
+    }
+}</code></pre>
+            <div class="info-box">
+                لاحظ إننا حطينا شرط <code>where TRequest : ICommand</code>. ده معناه إن أي <strong>Query</strong> مش هتدخل جوا الـ Validation Pipeline لأن الـ Queries مجرد قراءة ومش محتاجة Validation معقد يرمي Exceptions بالطريقة دي.
+            </div>
+
+            <h3>2. الـ LoggingBehavior:</h3>
+            <pre><code class="language-csharp">public class LoggingBehavior&lt;TRequest, TResponse&gt;(ILogger&lt;LoggingBehavior&lt;TRequest, TResponse&gt;&gt; logger)
+    : IPipelineBehavior&lt;TRequest, TResponse&gt;
+    where TRequest : notnull, IRequest&lt;TResponse&gt;
+    where TResponse : notnull
+{
+    public async Task&lt;TResponse&gt; Handle(TRequest request, RequestHandlerDelegate&lt;TResponse&gt; next, CancellationToken cancellationToken)
+    {
+        logger.LogInformation("[Start]Handling {RequestName}", typeof(TRequest).Name);
+        var timer = Stopwatch.StartNew();
+        
+        var response = await next();
+        
+        timer.Stop();
+        if (timer.Elapsed.Seconds > 3)
+            logger.LogWarning("Handling {RequestName} took {TimeTaken}", typeof(TRequest).Name, timer.Elapsed);
+            
+        logger.LogInformation("[End]Handled {RequestName}", typeof(TRequest).Name);
+        return response;
+    }
+}</code></pre>
+            <p>الـ Logging بيشتغل على كل الـ Requests (Commands + Queries). بيسجل بداية ونهاية العملية، ولو أخدت أكتر من 3 ثواني بيعمل Warning.</p>
+        </section>
+
+        <!-- Section 6 -->
+        <section id="section-6">
+            <h2>6. الـ Domain Events الداعمة In-Memory</h2>
+            <p>دي من أهم النقط في السيستم. إزاي السيستم بيعرف إن في حاجة حصلت جوا الـ Aggregate وبينشرها؟</p>
+
+            <h3>The Complete Flow (إزاي الأحداث بتشتغل):</h3>
+            <ol>
+                <li>الـ البيزنس بيتنفذ (مثلاً بنعدل سعر المنتج عن طريق <code>Product.Update()</code>).</li>
+                <li>جوا الـ <code>Update</code> بيتم استدعاء <code>AddDomainEvent(new ProductPriceChangedEvent(this))</code>. ده بيضيف الحدث للستة داخلية جوه الكائن.</li>
+                <li>بنعمل <code>SaveChangesAsync()</code> على الـ DbContext.</li>
+                <li>وهنا بييجي دور الـ <strong>Interceptor</strong> اللي بيوقف عملية الحفظ لحظة قبل ما يبعت الداتا للداتا بيز.</li>
+            </ol>
+
+            <pre><code class="language-csharp">public class DispatchDomainEventInterceptor(IMediator _mediator) : SaveChangesInterceptor
+{
+    public override async ValueTask&lt;InterceptionResult&lt;int&gt;&gt; SavingChangesAsync(
+        DbContextEventData eventData, InterceptionResult&lt;int&gt; result, CancellationToken cancellationToken = default)
+    {
+        // 1. قبل الحفظ، بننشر الأحداث
+        await DispatchDomainEvent(eventData.Context);
+        
+        // 2. بنكمل عملية الحفظ الطبيعية
+        return await base.SavingChangesAsync(eventData, result, cancellationToken);
+    }
+    
+    private async Task DispatchDomainEvent(DbContext? context)
+    {
+        if (context is null) return;
+        
+        // 1. بنجيب كل الـ Aggregates اللي حصل فيها تغيير من الـ ChangeTracker
+        var aggregate = context.ChangeTracker.Entries&lt;IAggregate&gt;().Select(a => a.Entity);
+        
+        // 2. بنجمع كل الـ Domain Events من الـ Aggregates دي
+        var domainEvents = aggregate.SelectMany(a => a.DomainEvents).ToList();
+        
+        // 3. بنمسح الأحداث من الـ Aggregates عشان ميتعملهاش نشر مرتين
+        aggregate.ToList().ForEach(domainEvent => domainEvent.ClearDomainEvents());
+        
+        // 4. بننشر كل حدث باستخدام MediatR
+        foreach (var domainEvent in domainEvents)
+            await _mediator.Publish(domainEvent); // ⚠️ IN-MEMORY PUBLISH
+    }
+}</code></pre>
+            <div class="warning-box">
+                <strong>خلي بالك جداً في الانترفيو:</strong> الـ Domain Events بتشتغل <strong>In-Memory (في نفس الـ Process)</strong> عن طريق MediatR. هي مش بتروح للـ RabbitMQ نهائي في المرحلة دي! MediatR بيدور على أي كلاس بيعمل Implement لـ <code>INotificationHandler</code> وبينفذه.
+            </div>
+
+            <h3>كمان عندنا الـ AuditableEntityInterceptor:</h3>
+            <p>عشان منكررش كود الـ CreatedAt و CreatedBy في كل حتة، بنستخدم Interceptor تاني بيكتبهم أوتوماتيك.</p>
+            <pre><code class="language-csharp">public class AuditableEntityInterceptor(IHttpContextAccessor _httpContextAccessor) : SaveChangesInterceptor
+{
+    private void UpdateEntitys(DbContext? context)
+    {
+        var entries = context.ChangeTracker.Entries&lt;IEntity&gt;();
+        var user = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "System";
+        
+        foreach (var entry in entries)
+        {
+            if (entry.State == EntityState.Added)
+            {
+                entry.Entity.CreatedBy = user;
+                entry.Entity.CreatedAt = DateTime.UtcNow;
+                entry.Entity.LastModifiedBy = user;
+                entry.Entity.LastModifiedAt = DateTime.UtcNow;
+            }
+            else if (entry.State == EntityState.Modified || entry.HasChangedOwendEntities())
+            {
+                entry.Entity.LastModifiedBy = user;
+                entry.Entity.LastModifiedAt = DateTime.UtcNow;
+            }
+        }
+    }
+}</code></pre>
+
+            <div class="diagram">
+                <h4>مخطط الـ SaveChanges Interceptors</h4>
+                <div class="flow-container">
+                    <div class="flow-box">Product.Update()</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box">DbContext.SaveChangesAsync()</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box" style="background:#be123c;">AuditableInterceptor (Set Dates)</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box" style="background:#4338ca;">DispatchDomainEventInterceptor</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box">MediatR.Publish()</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box" style="background:#15803d;">Actual DB Save (PostgreSQL)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7 -->
+        <section id="section-7">
+            <h2>7. الـ Integration Events (RabbitMQ + MassTransit) - نقطة الوصل!</h2>
+            <p>دي أهم نقطة عشان تفهم السيستم كله، إيه الفرق بين الـ Domain Event والـ Integration Event؟ وإزاي بنربطهم؟</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>المقارنة</th>
+                        <th>Domain Event</th>
+                        <th>Integration Event</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>الـ Scope (المدى)</strong></td>
+                        <td>جوا نفس الـ Module ونفس الـ Process</td>
+                        <td>عابر للـ Modules والـ Processes (Cross-Module)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>الوسيط (Transport)</strong></td>
+                        <td>MediatR (In-Memory)</td>
+                        <td>RabbitMQ عبر MassTransit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>الـ Interface</strong></td>
+                        <td><code>IDomainEvent : INotification</code></td>
+                        <td><code>IntegrationEvent</code> (Record)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>المُستقبِل (Handler)</strong></td>
+                        <td><code>INotificationHandler&lt;T&gt;</code></td>
+                        <td><code>IConsumer&lt;T&gt;</code> الخاص بـ MassTransit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>حجم الداتا</strong></td>
+                        <td>ممكن يبعت الـ Entity كامل بحالته</td>
+                        <td>بيبعت شوية Primitive Data بس (JSON) عشان تقليل الحجم</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>الـ Bridge (الجسر بين الـ Domain والـ Integration):</h3>
+            <p>لما الـ Interceptor بينشر الحدث عن طريق MediatR، في Handler مخصوص بيسمعله عشان <strong>يحوله لـ Integration Event ويبعته لـ RabbitMQ</strong>.</p>
+            
+            <pre><code class="language-csharp">public class ProductPriceChangedEventHandler(IBus bus, ILogger&lt;ProductPriceChangedEventHandler&gt; logger) 
+    : INotificationHandler&lt;ProductPriceChangedEvent&gt;
+{
+    public async Task Handle(ProductPriceChangedEvent notification, CancellationToken cancellationToken)
+    {
+        // 1. استقبلنا الحدث من MediatR
+        
+        // 2. بنعمل Map للبيانات المهمة بس في كلاس جديد
+        var integrationEvent = new ProductPriceChangedIntegrationEvent
+        {
+            ProductId = notification.Product.Id,
+            Name = notification.Product.Name,
+            Categories = notification.Product.Category,
+            Description = notification.Product.Description,
+            ImageUrl = notification.Product.ImageFile,
+            Price = notification.Product.Price,
+        };
+        
+        // 3. بننشره على RabbitMQ عن طريق MassTransit
+        await bus.Publish(integrationEvent, cancellationToken);  // ⚠️ ده بيروح لـ RabbitMQ
+    }
+}</code></pre>
+
+            <h3>الـ Consumer (ازاي موديول الـ Basket بيستقبل التغيير؟):</h3>
+            <p>في الـ Basket Module، عندنا كلاس بيعمل Implement لـ <code>IConsumer</code> من MassTransit بيستنى أي رسالة تيجي من RabbitMQ.</p>
+            <pre><code class="language-csharp">public class ProductPriceChangedIntegrationEventHandler(ISender sender, ILogger&lt;...&gt; logger) 
+    : IConsumer&lt;ProductPriceChangedIntegrationEvent&gt;  // ⚠️ لاحظ إن ده مش MediatR
+{
+    public async Task Consume(ConsumeContext&lt;ProductPriceChangedIntegrationEvent&gt; context)
+    {
+        // استقبلنا الرسالة من RabbitMQ
+        
+        // بنبعت Command جوا הـ Basket Module عشان يعدل الأسعار عنده
+        var result = await sender.Send(
+            new UpdateItemPriceBasketCommand(context.Message.ProductId, context.Message.Price));
+            
+        // Handler بتاع الكوماند ده هو اللي بيروح يـ Update الداتا بيز ويمسح الـ Redis Cache
+    }
+}</code></pre>
+
+            <h3>إعدادات MassTransit (الـ Config):</h3>
+            <pre><code class="language-csharp">public static IServiceCollection AddMassTransitWithAssmblies(this IServiceCollection services, 
+    IConfiguration configuration, params Assembly[] assemblies)
+{
+    services.AddMassTransit(config =>
+    {
+        // دي دالة سحرية بتخلي اسامي الـ Queues بـ kebab-case بناءً على اسم الكلاس!
+        config.SetKebabCaseEndpointNameFormatter(); 
+        
+        config.SetInMemorySagaRepositoryProvider();
+        
+        // بيدور في كل الـ Assemblies على أي كلاس عامل IConsumer وبيسجله أوتوماتيك
+        config.AddConsumers(assemblies); 
+        
+        config.UsingRabbitMq((context, cfg) =>
+        {
+            cfg.Host(configuration["MessageBroker:Host"], host =>
+            {
+                host.Username(configuration["MessageBroker:Username"]!);
+                host.Password(configuration["MessageBroker:Password"]!);
+            });
+            
+            // بيعمل Auto-wiring (بيعمل Queues و Exchanges ويربطهم ببعض لكل الـ Consumers)
+            cfg.ConfigureEndpoints(context);  
+        });
+    });
+    return services;
+}</code></pre>
+            <div class="info-box">
+                دالة <code>SetKebabCaseEndpointNameFormatter()</code> بتخلي اسم الـ Queue بتاع الكلاس <code>ProductPriceChangedIntegrationEventHandler</code> يتحول أوتوماتيك لـ: <code>product-price-changed-integration-event-handler</code> على RabbitMQ.
+            </div>
+        </section>
+
+        <!-- Section 8 -->
+        <section id="section-8">
+            <h2>8. شرح واجهة RabbitMQ (زي ما هي في صورك بالظبط!)</h2>
+            <p>لو سألوك في الانترفيو عن الـ UI بتاع RabbitMQ وإيه الحاجات الغريبة اللي بتظهر فيه، دي الإجابة التفصيلية بناءً على صور الـ Screenshots بتاعتك.</p>
+
+            <h3>شاشة الـ Overview:</h3>
+            <ul>
+                <li><strong>Node (rabbit@ecommerce-mq):</strong> ده اسم الـ Host بتاع الكونتينر اللي شغال عليه RabbitMQ (الاسم جي من docker-compose).</li>
+                <li><strong>File descriptors / Erlang processes:</strong> دي تفاصيل داخلية لـ Erlang (اللغة اللي مكتوب بيها RabbitMQ) بتوريك استهلاك الـ resources.</li>
+                <li><strong>Memory (145 MiB):</strong> استهلاك الرام للـ Node دي.</li>
+            </ul>
+
+            <h3>شاشة الـ Exchanges (الأهم!):</h3>
+            <p>ليه عندنا Exchanges بالأسماء دي؟ وازاي MassTransit عملها؟</p>
+            <ul>
+                <li><code>(AMQP default)</code> - direct: ده الأساسي بتاع RabbitMQ، أي Queue بتتعمل بتتربط بيه تلقائياً باسمها.</li>
+                <li><code>Shared.Messaging.Events:IntegrationEvent</code> - fanout: ده Exchange عام بيمثل الـ Base Class. MassTransit بيعمله تلقائياً عشان يدعم الـ Polymorphism (لو حبيت تسمع لأي Event بيورث من ده).</li>
+                <li><code>Shared.Messaging.Events:ProductPriceChangedIntegrationEvent</code> - fanout: <strong>ده الـ Exchange الخاص بالرسالة بتاعتنا.</strong> لما بنعمل <code>bus.Publish()</code>، الرسالة بتروح للـ Exchange ده الأول. ونوعه Fanout يعني هيبعت الرسالة لأي حاجة مربوطة بيه.</li>
+                <li><code>product-price-changed-integration-event-handler</code> - fanout: <strong>ده الـ Exchange الخاص بالـ Consumer.</strong> إيه ده؟ هو الـ Consumer ليه Exchange؟ أيوة! MassTransit بيعمل Exchange-to-Exchange Binding.</li>
+                <li>الباقي زي <code>amq.direct, amq.topic...</code> دول Exchanges أساسية من RabbitMQ نفسه ومبنيجيش ناحيتهم.</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>سر خطير للـ Interview: ليه MassTransit بيعمل Exchange-to-Exchange Binding؟</strong><br>
+                MassTransit مش بيربط الـ Exchange بتاع الرسالة بالـ Queue مباشرة! بيعمل كدا:<br>
+                <code>Message Exchange</code> ➔ <code>Consumer Exchange</code> ➔ <code>Consumer Queue</code><br><br>
+                <strong>السبب:</strong> عشان لو عندك أكتر من كلاس (Consumer) في أكتر من ميكروسيرفيس عاوزين يسمعوا نفس الرسالة، يبقى كل Consumer ليه الـ Exchange والـ Queue الخاصين بيه، ويتربطوا كلهم بالـ Exchange الرئيسي بتاع الرسالة، فكل واحد توصله نسخة مستقلة من غير ما يتأثروا ببعض!
+            </div>
+
+            <div class="diagram">
+                <h4>رحلة الرسالة من الكود لحد الـ Consumer</h4>
+                <div class="flow-container">
+                    <div class="flow-box">IBus.Publish()</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box" style="background:#0284c7;">Exchange: ProductPriceChangedIntegrationEvent</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box" style="background:#0284c7;">Exchange: product-price...handler</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box" style="background:#c026d3;">Queue: product-price...handler</div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-box">Consumer Class</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9 -->
+        <section id="section-9">
+            <h2>9. الـ Docker Infrastructure</h2>
+            <p>السيستم بيعتمد على مجموعة من الـ Containers بتدار بـ <code>docker-compose</code>:</p>
+            <ul>
+                <li><strong>PostgreSQL (eshopdb):</strong> الداتا بيز الرئيسية (بورت 5432).</li>
+                <li><strong>Redis (distributedcache):</strong> بنستخدمه كـ Caching Layer لسلة المشتريات (بورت 6379).</li>
+                <li><strong>Seq (seq):</strong> لـ Structured Logging عشان نشوف كل الـ Logs في مكان واحد بشكل مرتب (بورت 5341 للاستقبال و 9091 للواجهة).</li>
+                <li><strong>RabbitMQ (messagebus):</strong> عشان الـ Message Queues والـ Integration Events (بورت 5672 للكود و 15672 للواجهة).</li>
+            </ul>
+        </section>
+
+        <!-- Section 10 -->
+        <section id="section-10">
+            <h2>10. سلة المشتريات (Basket) و نمط הـ Decorator في הـ Caching</h2>
+            <p>في موديول الـ Basket، احنا بنستخدم نمط الـ <strong>Decorator Pattern</strong> عشان نضيف خاصية الكاشينج (Caching) من غير ما نعدل في كود الـ Repository الأصلي، وده تطبيق عظيم لمبدأ الـ Open/Closed Principle.</p>
+            
+            <pre><code class="language-csharp">// في ملف BasketModule.cs
+services.AddScoped&lt;IBasketRepository, BasketRepository&gt;();
+services.Decorate&lt;IBasketRepository, CachedBasketRepository&gt;();</code></pre>
+
+            <p>بنستخدم مكتبة <strong>Scrutor</strong> (عن طريق أمر <code>Decorate</code>) عشان تعمل الآتي: أي كلاس هيطلب <code>IBasketRepository</code> في الـ Constructor، هياخد نسخة من <code>CachedBasketRepository</code>، والـ Cached بدوره هياخد نسخة من الـ <code>BasketRepository</code> الأصلي يكلمه لو ملقاش الداتا في الـ Redis.</p>
+
+            <pre><code class="language-csharp">public class CachedBasketRepository(
+    IBasketRepository _basketRepository,  // ده الـ Original
+    IDistributedCache _distributedCache) : IBasketRepository
+{
+    public async Task&lt;ShoppingCart&gt; GetBasketAsync(string userName, bool asNoTracking = true, CancellationToken cancellationToken = default)
+    {
+        // 1. بندور في الـ Redis الاول
+        var cachedJson = await _distributedCache.GetStringAsync(cacheKey, cancellationToken);
+        if (cachedJson is not null)
+        {
+            return Deserialize(cachedJson); // Cache Hit
+        }
+
+        // 2. لو ملقيناهوش، بنكلم الـ Original Repository يجيبه من الـ DB
+        var basket = await _basketRepository.GetBasketAsync(userName, asNoTracking, cancellationToken);
+        
+        // 3. نحفظه في الكاش للمرات الجاية
+        await SetCacheAsync(cacheKey, basket, cancellationToken);
+        
+        return basket;
+    }
+}</code></pre>
+            <div class="info-box">
+                ولما بيحصل تحديث (زي الـ Integration Event بتاع تغيير السعر ما بيضرب)، الـ Handler بيروح يمسح الكاش بتاع اليوزرز اللي اتأثروا، عشان المرة الجاية يجيبوا الداتا الجديدة من الداتا بيز وبعدين تتكيش تاني.
+            </div>
+        </section>
+
+        <!-- Section 11 -->
+        <section id="section-11">
+            <h2>11. التواصل بين الـ Modules (Cross-Module Communication)</h2>
+            <p>عندنا نوعين من التواصل بين الـ Modules (مثلاً Basket عايز يكلم Catalog):</p>
+
+            <h3>1. تواصل متزامن (Synchronous - In-Process):</h3>
+            <p>لو الـ Basket عايز بيانات منتج <strong>عشان ينفذ عملية دلوقتي حالاً</strong> (مثلاً اليوزر بيضيف منتج للسلة ومحتاجين نجيب سعره واسمه). بنعمل ده عن طريق <strong>MediatR</strong> ومكتبة <code>Catalog.Contracts</code>.</p>
+            <pre><code class="language-csharp">// جوا Basket Handler
+var result = await sender.Send(new GetProductByIdQuery(request.ProductId)); 
+// الـ Query متعرف في Shared Contracts، والـ Handler بتاعه عايش في الـ Catalog! MediatR بيوصلهم ببعض In-Memory</code></pre>
+
+            <h3>2. تواصل غير متزامن (Asynchronous - Message Broker):</h3>
+            <p>لو الـ Catalog غير سعر منتج، وعايز <strong>يبلغ</strong> الـ Basket عشان يعدل السلات اللي فيها المنتج ده (بدون ما يعطّل نفسه). بنعمل ده عن طريق الـ <strong>Integration Events و RabbitMQ</strong> زي ما شرحنا فوق.</p>
+        </section>
+
+        <!-- Section 12 -->
+        <section id="section-12">
+            <h2>12. الـ Bootstrapper (نقطة التجميع)</h2>
+            <p>في الـ Modular Monolith، كل Module بيكون مستقل (كلاس لايبراري لوحده). الـ <code>Eshop.API</code> هو الـ Host Project اللي بيلمهم كلهم مع بعض عشان يشتغلوا كبرنامج واحد.</p>
+
+            <pre><code class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+// 1. جلب הـ Assemblies بتاعت كل الـ Modules
+var CatalogAssembly = typeof(CatalogModule).Assembly;
+var BasketAssembly = typeof(BasketModule).Assembly;
+var OrderingAssembly = typeof(OrderingModule).Assembly;
+
+// 2. تسجيل الخدمات المشتركة لكل הـ Assemblies بخبطة واحدة!
+builder.Services.AddCarterWithAssmblies(CatalogAssembly, BasketAssembly, OrderingAssembly);
+builder.Services.AddMediatRWithAssmblies(CatalogAssembly, BasketAssembly, OrderingAssembly);
+builder.Services.AddMassTransitWithAssmblies(builder.Configuration, CatalogAssembly, BasketAssembly, OrderingAssembly);
+
+// 3. تسجيل الـ Interceptors (الـ Domain Events)
+builder.Services.AddScoped&lt;ISaveChangesInterceptor, AuditableEntityInterceptor&gt;();
+builder.Services.AddScoped&lt;ISaveChangesInterceptor, DispatchDomainEventInterceptor&gt;();
+
+// 4. استدعاء دوال التسجيل الخاصة بكل Module
+builder.Services
+    .AddCatalogModule(builder.Configuration)
+    .AddBasketModule(builder.Configuration)
+    .AddOrderingModule(builder.Configuration);
+
+var app = builder.Build();
+
+// 5. تهيئة الـ Modules (تطبيق الـ Migrations وعمل Seeding)
+await app.UseCatalogModuleAsync();
+await app.UseBasketModuleAsync();
+await app.UseOrderingModuleAsync();
+
+app.Run();</code></pre>
+            <div class="info-box">
+                هنا بتظهر قوة الـ Modular Monolith: الـ <code>Program.cs</code> نضيف جداً. كل Module مسئول عن خدماته، والـ Bootstrapper مجرد مجمع بياخد الـ Configurations ويركبهم جنب بعض.
+            </div>
+        </section>
+
+        <!-- Section 13 -->
+        <section id="section-13">
+            <h2>13. أسئلة المقابلة (Interview Q&A) وإجاباتها النموذجية</h2>
+            <p>دي تجميعة لأهم الأسئلة اللي ممكن تتسألها بناءً على الأركيتكتشر اللي أنت عملتها، مع الإجابة اللي تبينك فاهم جداً (Senior Level):</p>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 1: إيه الفرق بين الـ Domain Event والـ Integration Event؟ وليه مستخدمش واحد بس؟</h4>
+                <p><strong>الإجابة:</strong> الـ Domain Event بيحصل جوا نفس الباوندري (نفس الموديول) وبيتنشر In-Memory باستخدام MediatR، وممكن يتبعت فيه الكائن كامل (زي Product) عشان الـ Handlers اللي معاه في نفس الموديول يتصرفوا. <br>أما الـ Integration Event ده بنستخدمه لما نعوز نكلم موديول تاني أو سيستم تاني. ده بيتبعت عبر Message Broker (RabbitMQ)، ولازم يكون خفيف جداً ومفيهوش كائنات معقدة (Primitive types بس) لتقليل حجم الـ Payload وتجنب الـ Coupling. بنحول الـ Domain Event لـ Integration Event عشان نكلم العالم الخارجي.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 2: إزاي بتضمن إن الـ Domain Events تتنفذ قبل ما الداتا تتحفظ فعلاً؟</h4>
+                <p><strong>الإجابة:</strong> بستخدم الـ <code>SaveChangesInterceptor</code> الخاص بـ EF Core. بعمل Override لدالة <code>SavingChangesAsync</code>، وقبل ما أنادي الـ Base method، بجيب كل الـ Aggregates اللي حصلها Track وفيها Events، بمسح Events دي منها وببعتها لـ MediatR.Publish عشان الـ Handlers تتنفذ. ولما كله يخلص، الداتا بتتحفظ.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 3: ليه بتفصل الـ Commands عن الـ Queries (CQRS) مع إنهم على نفس الداتا بيز؟</h4>
+                <p><strong>الإجابة:</strong> الـ CQRS حتى لو على داتا بيز واحدة (Logical Separation) بيفيدني في الـ Separation of Concerns. الـ Commands بيبقى فيها Business Logic معقد و Validation، بينما الـ Queries بتبقى بسيطة وممكن ترجع DTOs مباشرة باستخدام <code>AsNoTracking</code> أو حتى أكلم الداتا بيز بـ Dapper لو حبيت أسرعها. كمان بيفيدني إني أقدر أحط Behaviors معينة (زي الـ Validation) على الـ Commands بس.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 4: إيه هو الـ Outbox Pattern وهل هو متطبق في السيستم بتاعك؟</h4>
+                <p><strong>الإجابة:</strong> السيستم الحالي <strong>مفيهوش</strong> Outbox Pattern. حالياً احنا بنبعت الـ Integration Event مباشرة لـ RabbitMQ جوا الـ Handler. الـ Outbox Pattern بيحل مشكلة الـ Dual Write (إن الداتا تتحفظ في الداتا بيز بس الرسالة تقع قبل ما توصل RabbitMQ). عشان أطبقه، المفروض أحفظ الـ Event في جدول في الداتا بيز (Outbox Table) في نفس الـ Transaction بتاعة البيزنس، ويكون فيه Background Worker بيقرا الجدول ده ويبعت لـ RabbitMQ. (قولها كدا هتبين إنك عارف العيوب وازاي تحلها!).</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 5: إزاي بتطبق الـ Caching في الـ Basket وليه استخدمت Scrutor؟</h4>
+                <p><strong>الإجابة:</strong> طبقت الـ Cache-Aside pattern باستخدام الـ Decorator Pattern. الـ <code>CachedBasketRepository</code> بيعمل Wrap للـ <code>BasketRepository</code> الأصلي. استخدمت <code>Scrutor</code> عشان بيسهل عملية الـ Dependency Injection بتاعة الـ Decorator من غير ما ألخبط الـ DI Container. لو الداتا مش في الـ Redis بنجيبها من الـ DB ونحطها في الكاش. ولما يحصل Update بنمسح الكاش بتاع اليوزر ده (Invalidation).</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 6: ليه الـ Exchange بتاع الرسالة مربوط بـ Exchange تاني باسم الـ Consumer في RabbitMQ؟</h4>
+                <p><strong>الإجابة:</strong> دي تركاية بيعملها MassTransit. بدل ما يربط الـ Message Exchange بالـ Queue مباشرة، بيعمل Consumer Exchange في النص (Exchange-to-Exchange Binding). ده بيسمح بمرونة عالية (Topology Routing). لو عندي أكتر من سيرفيس أو Consumer محتاجين يسمعوا نفس الحدث، كل واحد بيتعمله Exchange يتربط بالأساسي، وكدة كل Consumer بياخد نسخته الخاصة من غير ما يؤثروا على بعض ولو consumer وقع مش هيوقع الباقي.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 7: إيه هو الـ Modular Monolith وليه مش Microservices؟</h4>
+                <p><strong>الإجابة:</strong> الـ Modular Monolith هو كود متقسم لـ Modules مستقلة تماماً (زي الـ Microservices)، كل موديول ليه الـ DB Schema بتاعته وليه الباوندري بتاعه ومبيكلموش بعض مباشرة إلا عبر الـ Contracts أو الـ Events. لكن في النهاية بيتعملهم Deploy في Process واحدة (Host واحد). ده بيدينا ميزة التنظيم العالي وسهولة فصلهم مستقبلاً لـ Microservices، وفي نفس الوقت بيوفر علينا تعقيدات الشبكة والـ DevOps والـ Distributed Transactions اللي موجودة في الـ Microservices.</p>
+            </div>
+</section>
+
+        <!-- Section 14 -->
+        <section id="section-14">
+            <h2>14. الفجوات الحالية والتحسينات المستقبلية (Filling the Gaps)</h2>
+            <p>أي سيستم في الدنيا بيبدأ بنسخة مبدئية وبيحصل فيه تطور. عشان تبين في الانترفيو إنك مش بس كاتب كود، إنما كمان فاهم إيه اللي ناقصك وإزاي تطوره مستقبلاً (Senior Mindset)، دي أهم الـ Gaps اللي في السيستم حالياً واللي هنعالجها قدام:</p>
+
+            <div class="warning-box">
+                <h4>1. غياب الـ Outbox Pattern (نقطة حرجة)</h4>
+                <p><strong>المشكلة:</strong> حالياً في الـ <code>ProductPriceChangedEventHandler</code>، احنا بنعمل Publish للرسالة على RabbitMQ مباشرة. لو الـ Message Broker كان واقع، الرسالة هتضيع والـ Basket مش هيعرف إن السعر اتغير!<br>
+                <strong>الحل المستقبلي:</strong> تطبيق نمط الـ Transactional Outbox. هنحفظ الرسالة في جدول في الداتا بيز (Outbox Table) في نفس الـ Transaction، وبعدين Service تانية (Background Worker) تقرأ من الجدول ده وتبعت لـ RabbitMQ. ده بيضمن 100% إن الرسالة مش هتضيع.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>2. التعامل مع الـ Idempotency (التكرار)</h4>
+                <p><strong>المشكلة:</strong> RabbitMQ بيضمن إن الرسالة توصل At-Least-Once، يعني ممكن جداً الرسالة توصل للـ Consumer مرتين (بسبب Network glitch). حالياً الـ Basket لو استقبل رسالة تغيير السعر مرتين، هيحدث الداتا بيز مرتين.<br>
+                <strong>الحل المستقبلي:</strong> لازم نخلي الـ Consumers عندنا "Idempotent". يعني نسجل الـ <code>EventId</code> في جدول في الداتا بيز لما نستلمه، ولو الرسالة جت تاني بنفس الـ ID، نتجاهلها.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>3. الـ Security و Keycloak (الخطوة الجاية!)</h4>
+                <p><strong>الوضع الحالي:</strong> الـ Endpoints بتاعتنا مفتوحة وأي حد يقدر يعمل Create Product أو يضيف في سلة المشتريات (مفيش Authentication).<br>
+                <strong>الخطوة الجاية:</strong> هندمج <strong>Keycloak</strong> عشان يعمل Identity Provider للسيستم بتاعنا، ونستخدم OAuth2 + OpenID Connect (OIDC). السيستم هيستقبل JWT Token، ويحصلها Validation، ونتأكد من الـ Roles بتاعة اليوزر قبل ما ننفذ الـ Commands.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>4. الـ Resiliency (المرونة ضد الأعطال) بـ Polly</h4>
+                <p><strong>الوضع الحالي:</strong> لو الـ Redis وقع، الـ Basket Repository هيضرب Exception ومش هيرد على اليوزر.<br>
+                <strong>الحل المستقبلي:</strong> استخدام مكتبة Polly لعمل Retry Policy أو Circuit Breaker بحيث لو الـ Cache واقع، يقدر يكمل ويجيب الداتا من الـ DB من غير ما يوقع الـ Request.</p>
+            </div>
+            
+            <h3 style="margin-top: 30px; color: var(--accent-color);">أسئلة إضافية للمقابلة (المستوى المتقدم):</h3>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 8: إزاي بتتعامل مع الـ Data Consistency بين أكتر من Module؟</h4>
+                <p><strong>الإجابة:</strong> بما إننا Modular Monolith وكل موديول ليه الـ DB Context بتاعه (Logical Separation)، مقدرش أعمل Database Transaction واحدة تجمعهم. عشان كده بستخدم الـ <strong>Eventual Consistency</strong> عن طريق الـ Integration Events. الـ Catalog بيحدث الداتا بتاعته، وبيبعت Event، والـ Basket بيحدث الداتا بتاعته لما يستلم الحدث. لو حصل فشل، لازم يكون عندي Retry Mechanism و Dead Letter Queue (DLQ) في RabbitMQ.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 9: ليه استخدمت الـ Decorator Pattern للكاشينج ومستخدمتش الـ Middleware؟</h4>
+                <p><strong>الإجابة:</strong> الـ Middleware بيشتغل على مستوى الـ HTTP Request كله (برة الـ Application Layer). الـ Decorator بيشتغل جوا الـ Application Layer وبيعمل Wrap للـ Repository. ده أحسن بكتير لأنه بيفصل الـ Business Logic عن الـ Caching Logic (Single Responsibility Principle) وبيخليني أقدر أطبق الكاشينج من غير ما أغير أي كود في الـ Handlers أو في الـ Repository الأصلي (Open/Closed Principle).</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-color);">س 10: إيه اللي بيحصل لو الـ Validation بتاع Command فشل؟</h4>
+                <p><strong>الإجابة:</strong> الـ ValidationBehavior في MediatR هيوقف الـ Request قبل ما يوصل للـ Handler أصلاً، وهيرمي <code>ValidationException</code>. بعد كده بييجي دور الـ <strong>Global Exception Handler</strong> (اللي متسجل في الـ Bootstrapper)، بيمسك الـ Exception ده ويحوله لـ Problem Details (Standard HTTP 400 Bad Request) ويرجعه لليوزر بشكل مرتب فيه كل الأخطاء.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script>
+        // Smooth scrolling for sidebar links
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
