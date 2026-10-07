@@ -8,7 +8,10 @@ services:
       image: datalust/seq:latest
 
   messagebus:
-      image: rabbitmq:management
-     
+      image: rabbitmq:management    
+
+  identity:
+      image: quay.io/keycloak/keycloak:latest
+      
 volumes:
     postgresql_eshopdb:

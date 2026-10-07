@@ -1,5 +1,4 @@
-name: eshop-stack
-
+name: eshop-stack 
 services:
   eshopdb:
     container_name: eshopdb
@@ -19,7 +18,20 @@ services:
     restart: always
     ports:
           - "6379:6379"
-
+  identity:
+    container_name:  identity
+    environment:
+          KEYCLOAK_ADMIN: admin
+          KEYCLOAK_ADMIN_PASSWORD: admin
+          KC_DB: postgres
+          KC_DB_URL: jdbc:postgresql://eshopdb/EshopDb?currentSchema=identity
+          KC_DB_USERNAME: postgres
+          KC_DB_PASSWORD: postgres
+    restart: always
+    ports:
+            - "9090:8080"
+    command:
+            - start-dev
 
   seq: 
     container_name: seq
