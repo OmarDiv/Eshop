@@ -24,6 +24,9 @@ builder.Services.AddMassTransitWithAssmblies(builder.Configuration, CatalogAssem
 builder.Services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
 builder.Services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventInterceptor>();
 
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
+
 builder.Services
     .AddCatalogModule(builder.Configuration)
     .AddBasketModule(builder.Configuration)
@@ -37,6 +40,8 @@ var app = builder.Build();
 app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
+app.UseAuthentication();
+app.UseAuthorization();
 
 await app.UseCatalogModuleAsync();
 await app.UseBasketModuleAsync();
